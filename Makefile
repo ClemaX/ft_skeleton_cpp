@@ -1,38 +1,38 @@
-NAME = skeleton
+NAME := skeleton
 
 # Compiler and linker
-CXX = clang++
-LD = clang++
+CXX := clang++
+LD := clang++
 
 # Paths
-SRCDIR = src
-INCDIR = include
-LIBDIR = ..
+SRCDIR := src
+INCDIR := include
+LIBDIR := ..
 
-OBJDIR = obj
-BINDIR = .
+OBJDIR := obj
+BINDIR := .
 
 # Library dependencies
-LIBS = $(addprefix $(LIBDIR)/, )
+LIBS := $(addprefix $(LIBDIR)/, )
 
-LIBDIRS = $(dir $(LIBS))
-LIBINCS = $(addsuffix $(INCDIR), $(LIBDIRS))
-LIBARS = $(notdir $(LIBS))
+LIBDIRS := $(dir $(LIBS))
+LIBINCS := $(addsuffix $(INCDIR), $(LIBDIRS))
+LIBARS := $(notdir $(LIBS))
 
 # Sources
-INCS = $(LIBINCS) $(INCDIR)
-SRCS = $(addprefix $(SRCDIR)/,\
+INCS := $(LIBINCS) $(INCDIR)
+SRCS := $(addprefix $(SRCDIR)/,\
 	main.cpp\
 )
 
-OBJS = $(SRCS:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
-DEPS = $(OBJS:.o=.d)
+OBJS := $(SRCS:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
+DEPS := $(OBJS:.o=.d)
 
 # Flags
-CXXFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c++98 $(INCS:%=-I%)
+CXXFLAGS := -Wall -Wextra -Werror -Wpedantic -std=c++98 $(INCS:%=-I%)
 DFLAGS = -MT $@ -MMD -MP -MF $(OBJDIR)/$*.d
-LDFLAGS = $(LIBDIRS:%=-L%)
-LDLIBS = $(LIBARS:lib%.a=-l%)
+LDFLAGS := $(LIBDIRS:%=-L%)
+LDLIBS := $(LIBARS:lib%.a=-l%)
 
 # Compiling commands
 COMPILE.cpp = $(CXX) $(DFLAGS) $(CXXFLAGS) -c
