@@ -47,7 +47,7 @@ $(OBJDIR) $(BINDIR):
 
 # Libraries
 $(LIBS): %.a: FORCE
-	make -C $(dir $@) NAME=$(@F)
+	$(MAKE) -C $(dir $@) NAME=$(@F)
 
 # Objects
 $(OBJS): $(OBJDIR)/%.o: $(SRCDIR)/%.cpp $(OBJDIR)/%.d | $(OBJDIR)
@@ -67,14 +67,14 @@ $(BINDIR)/$(NAME): $(OBJS) $(LIBS) | $(BINDIR)
 # Remove temporary objects
 clean:
 	$(foreach libdir, $(LIBDIRS),\
-		echo "MK -C $(libdir) $@" && make -C $(libdir) $@ && ):
+		echo "MK -C $(libdir) $@" && $(MAKE) -C $(libdir) $@ && ):
 	@echo "RM $(OBJDIR)"
 	rm -rf "$(OBJDIR)"
 
 # Remove all binaries
 fclean: clean
 	$(foreach libdir, $(LIBDIRS),\
-		echo "MK -C $(libdir) $@" && make -C $(libdir) $@ && ):
+		echo "MK -C $(libdir) $@" && $(MAKE) -C $(libdir) $@ && ):
 	@echo "RM $(BINDIR)/$(NAME)"
 	rm -f "$(BINDIR)/$(NAME)"
 	@rmdir "$(BINDIR)" 2>/dev/null && echo "RM $(BINDIR)" || :
