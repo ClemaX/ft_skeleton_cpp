@@ -50,7 +50,7 @@ $(LIBS): %.a: FORCE
 	$(MAKE) -C $(dir $@) NAME=$(@F)
 
 # Objects
-$(OBJS): $(OBJDIR)/%.o: $(SRCDIR)/%.cpp $(OBJDIR)/%.d | $(OBJDIR)
+$(OBJS): $(OBJDIR)/%.o: $(SRCDIR)/%.cpp | $(OBJDIR)
 	@mkdir -p '$(@D)'
 	@echo "CXX $<"
 	$(COMPILE.cpp) $< -o $@
